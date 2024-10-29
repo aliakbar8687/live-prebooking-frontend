@@ -1,0 +1,120 @@
+<div class="container mt-4">
+  <div *ngIf="successMessage" class="alert alert-success mt-3">
+    {{ successMessage }}
+  </div>
+  <h2 class="mb-4">{{ isUpdateMode ? 'Update Ticket' : 'Create Ticket' }}</h2>
+  <form [formGroup]="ticketForm" (ngSubmit)="onSubmit()" class="border p-4 rounded bg-light">
+    <div class="form-group">
+      <label for="itemId"><i class="bi bi-box-arrow-up-right"></i>&nbsp;Item ID:</label>
+      <input id="itemId" formControlName="itemId" type="text" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label for="ticketNumber"><i class="bi bi-ticket-detailed"></i>&nbsp;Ticket Number:</label>
+      <input id="ticketNumber" formControlName="ticketNumber" type="text" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+      <label for="vehicleName"><i class="bi bi-file-person"></i>&nbsp;Vehicle/Driver Name:</label>
+      <select id="vehicleName" formControlName="vehicleName" class="form-control">
+        <option value="" disabled selected>
+          {{ filteredVehicles.length > 0 ? 'Select a vehicle' : 'No vehicles available - Add vehicle first' }}
+        </option>
+        <option *ngFor="let vehicle of filteredVehicles" [value]="vehicle.vehiclename">
+          {{ vehicle.vehiclename }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="vehicleNumber"><i class="bi bi-truck"></i>&nbsp;Vehicle Number:</label>
+      <input id="vehicleNumber" formControlName="vehicleNumber" type="text" class="form-control" readonly />
+    </div>
+    <div class="form-group">
+      <label for="status"><i class="bi bi-menu-up"></i>&nbsp;Status:</label>
+      <select id="status" formControlName="status" class="form-control">
+        <option value="pending">Pending</option>
+        <option value="in-progress">In Progress</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+    <!-- <div class="form-group">
+      <label for="store">Store:</label>
+      <input id="store" formControlName="store" type="text" class="form-control" readonly />
+    </div> -->
+    <button type="submit" class="btn btn-primary me-2" [disabled]="!ticketForm.valid">
+      {{ isUpdateMode ? 'Update Ticket' : 'Create Ticket' }}
+    </button>
+    
+    <button *ngIf="isUpdateMode" type="button" class="btn btn-danger ml-2 me-2" (click)="confirmDeletion()">
+      Close Ticket
+    </button>
+
+    <button *ngIf="isUpdateMode" type="button" class="btn btn-danger ml-2 me-2" (click)="close()">
+      Close Page
+    </button>
+    
+    <!-- <button *ngIf="userRole==='admin'" type="button" class="btn btn-secondary ml-2 me-2" (click)="openTicketsModal()">
+      View All Tickets
+    </button> -->
+  </form>
+
+  <!-- Confirmation Modal -->
+  <div *ngIf="confirmationDialogVisible" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="bi bi-check-circle"></i>&nbsp;Confirmation</h5>
+          <button type="button" class="close" (click)="confirmationDialogVisible = false">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete this ticket?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" (click)="deleteTicket()"><i class="bi bi-emoji-heart-eyes"></i>&nbsp;Yes</button>
+          <button type="button" class="btn btn-secondary" (click)="confirmationDialogVisible = false"><i class="bi bi-bell-slash"></i>&nbsp;No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tickets Modal -->
+  <div *ngIf="ticketsModalVisible" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">All Tickets</h5>
+          <button type="button" class="close" (click)="closeTicketsModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Item ID</th>
+                <th>Ticket Number</th>
+                <th>Vehicle/Driver Name</th>
+                <th>Vehicle Number</th>
+                <th>Status</th>
+                <th>Store</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ticket of allTickets">
+                <td>{{ ticket.itemId }}</td>
+                <td>{{ ticket.ticketNumber }}</td>
+                <td>{{ ticket.vehicleName }}</td>
+                <td>{{ ticket.vehicleNumber }}</td>
+                <td>{{ ticket.status }}</td>
+                <td>{{ ticket.store }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="closeTicketsModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

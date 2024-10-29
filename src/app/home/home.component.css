@@ -1,0 +1,58 @@
+.profile-container {
+    background-color: #495057; /* Dark gray for container */
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    margin-top: 50px;
+}
+.company-image {
+    width: 100%;
+    max-width: 250px; /* Limit max width */
+    border-radius: 15px;
+    margin-bottom: 20px; /* Space below the image */
+
+}
+h2, h4 {
+    color:#1a97b3; /* Light yellow for headings */
+}
+h2:hover , h4:hover {
+    color: #aff13d;
+}
+p {
+    color: #f8f9fa; /* Light gray for paragraphs */
+    line-height: 1.6;
+}
+.lead {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.principles-list {
+    list-style-type: none; /* Remove default list styling */
+    padding-left: 0; /* Remove left padding */
+    margin-top: 20px; /* Add some margin at the top */
+}
+
+.principles-list li {
+    background-color:#1a97b3; /* Medium gray background for list items */
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 0; /* Space between list items */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center; /* Center items vertically */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    font-weight: 900;
+}
+
+.principles-list li img {
+    width: 80px; /* Set a fixed width for icons */
+    height: 80px; /* Set a fixed height for icons */
+    margin-right: 10px; /* Space between icon and text */
+}
+
+.principles-list li:hover {
+    background-color: #aff13d; /* Darker gray on hover */
+}
+.container {
+    max-width: 1200px; /* Limit container width */
+    margin: 0 auto; /* Center the container */
+}

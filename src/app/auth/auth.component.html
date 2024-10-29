@@ -1,0 +1,118 @@
+<div class="container">
+  <h2 *ngIf="isLoginMode">Western International Group (WIG)</h2>
+  <img *ngIf="isLoginMode" src="images\logo.jpg" alt="Company Logo" class="company-image">
+  <h2><i class="bi bi-person-circle"></i>&nbsp;{{ isLoginMode ? 'Login' : 'Signup' }}</h2>
+
+  <!-- Message Display -->
+  <div [ngClass]="{ 'alert-success': messageType === 'success', 'alert-danger': messageType === 'error' }" *ngIf="message">
+    {{ message }}
+  </div>
+
+  <!-- Loader Display -->
+  <div *ngIf="prebookFormService.isLoading()" class="loader"></div>
+
+  <form [formGroup]="isLoginMode ? loginForm : signupForm" (ngSubmit)="isLoginMode ? onLogin() : onSignup()">
+
+    <!-- Login Email Field -->
+    <div class="form-group" *ngIf="isLoginMode">
+      <label for="login-email"><i class="bi bi-envelope-open-fill"></i>&nbsp;Email</label>
+      <input type="email" id="login-email" formControlName="email" class="form-control">
+      <div *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid && loginForm.get('email')?.value !== 'admin'" class="text-danger">
+        A valid email is required.
+      </div>
+    </div>
+
+    <!-- Login Password Field -->
+    <div class="form-group" *ngIf="isLoginMode" >
+      <label for="login-password"><i class="bi bi-wrench" ></i> &nbsp;Password</label>
+      <input type="password" id="login-password" formControlName="password" class="form-control" placeholder="**************">
+      <div *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid" class="text-danger">
+        Password is required (min 6 characters).
+      </div>
+    </div>
+
+    <!-- Signup Fields -->
+    <div class="form-group" *ngIf="!isLoginMode">
+      <label for="firstname"><i class="bi bi-person"></i>&nbsp;First Name</label>
+      <input type="text" id="firstname" formControlName="firstname" class="form-control">
+      <div *ngIf="signupForm.get('firstname')?.touched && signupForm.get('firstname')?.invalid" class="text-danger">
+        First name is required.
+      </div>
+    </div>
+
+    <div class="form-group" *ngIf="!isLoginMode">
+      <label for="lastname"><i class="bi bi-person"></i>&nbsp;Last Name</label>
+      <input type="text" id="lastname" formControlName="lastname" class="form-control">
+      <div *ngIf="signupForm.get('lastname')?.touched && signupForm.get('lastname')?.invalid" class="text-danger">
+        Last name is required.
+      </div>
+    </div>
+
+<!-- Email Field -->
+<div class="form-group" *ngIf="!isLoginMode">
+  <label for="email"><i class="bi bi-envelope-open-fill"></i>&nbsp;Email</label>
+  <input type="email" id="email" formControlName="email" class="form-control">
+  
+  <!-- Display error for existing email -->
+  <div *ngIf="signupForm.get('email')?.hasError('emailExists') && signupForm.get('email')?.touched" class="text-danger">
+    This email is already in use.
+  </div>
+  
+  <!-- Other email-related errors -->
+  <div *ngIf="signupForm.get('email')?.touched && signupForm.get('email')?.invalid && !signupForm.get('email')?.hasError('emailExists')" class="text-danger">
+    Please enter a valid email.
+  </div>
+</div>
+
+    <div class="form-group" *ngIf="!isLoginMode">
+      <label for="store"><i class="bi bi-check2-square"></i>Store</label>
+      <select id="store" formControlName="store" class="form-control">
+        <option value="" disabled>Select Store</option>
+        <option *ngFor="let store of stores" [value]="store">{{ store }}</option>
+      </select>
+      <div *ngIf="signupForm.get('store')?.touched && signupForm.get('store')?.invalid" class="text-danger">
+        Store selection is required.
+      </div>
+    </div>
+
+<!-- Phone Field -->
+<div class="form-group" *ngIf="!isLoginMode">
+  <label for="phone"><i class="bi bi-phone-fill"></i> &nbsp;Phone</label>
+  <input type="text" id="phone" formControlName="phone" class="form-control">
+  
+  <!-- Display error for existing phone -->
+  <div *ngIf="signupForm.get('phone')?.hasError('phoneExists') && signupForm.get('phone')?.touched" class="text-danger">
+    This phone number is already in use.
+  </div>
+  
+  <!-- Other phone-related errors -->
+  <div *ngIf="signupForm.get('phone')?.touched && signupForm.get('phone')?.invalid && !signupForm.get('phone')?.hasError('phoneExists')" class="text-danger">
+    Please enter a valid phone number.
+  </div>
+</div>
+
+
+    <div class="form-group" *ngIf="!isLoginMode">
+      <label for="password"><i class="bi bi-wrench" ></i> &nbsp;Password</label>
+      <input type="password" id="password" formControlName="password" class="form-control" placeholder="**************">
+      <div *ngIf="signupForm.get('password')?.touched && signupForm.get('password')?.invalid" class="text-danger">
+        Password is required (min 6 characters).
+      </div>
+    </div>
+
+    <!-- CAPTCHA Field -->
+    <div class="form-group" *ngIf="!isLoginMode">
+      <label for="captcha"><i class="bi bi-badge-cc-fill"></i>&nbsp;CAPTCHA: <strong>{{ captcha }}</strong></label>
+      <input type="text" id="captcha" formControlName="captcha" [(ngModel)]="enteredCaptcha" class="form-control">
+      <div *ngIf="signupForm.get('captcha')?.touched && signupForm.get('captcha')?.invalid" class="text-danger">
+        CAPTCHA is required.
+      </div>
+      <div *ngIf="messageType === 'error' && message.includes('CAPTCHA')" class="text-danger">
+        {{ message }}
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary" [disabled]="isLoading">{{ isLoginMode ? 'Login' : 'Signup' }}</button>
+  </form>
+</div>

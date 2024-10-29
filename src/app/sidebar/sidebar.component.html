@@ -1,0 +1,40 @@
+<!-- Sidebar Component Template -->
+<nav class="sidebar " *ngIf="isAuthenticated() && !isLoading()">
+  <div class="current-date-time">
+    <strong><i class="bi bi-calendar3"></i>&nbsp;{{ currentDateTime }}</strong>
+  </div>
+
+  <div class="user-role">
+    <div>
+    <strong><i class="bi bi-person-badge"></i>&nbsp; {{ userRole || 'Admin' | capitalize }}</strong>
+  </div>
+  <div style="text-align: center;margin-top: 20px;font-size: 2.5rem;  " class="user-role">
+    <strong>Dashboard&nbsp;<br><br><i class="bi bi-book"></i></strong>
+  </div>
+</div>
+  <ul>
+    <li><a routerLink="/home" ><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Home</a></li>
+
+    <li><a routerLink="/prebooking-data"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Prebooking Data</a></li>
+    <li><a routerLink="/prebooking-report"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Prebooking Report</a></li>
+    <li><a routerLink="/delivery-log-book"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Delivery Log Book</a></li>
+    <!-- Conditionally show Signup option only for admin -->
+   
+    <li *ngIf="isAdmin">
+      <a routerLink="/manage-user"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Manage Users</a>
+    </li>
+
+    
+    <li *ngIf="isAdmin">
+      <a (click)="setSignupMode()" style="cursor: pointer;"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Signup New User</a>
+    </li>
+    
+    <li *ngIf="isAdmin">
+      <a routerLink="/activity-log"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Activity Log</a>
+    </li>
+    <li><a (click)="logout()" style="cursor: pointer;"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Logout</a></li>
+  </ul>
+</nav>
+<div *ngIf="isLoading()" class="loader">
+  <img src="https://www.icegif.com/wp-content/uploads/2023/07/icegif-1260.gif" alt="Loading..." />
+</div>

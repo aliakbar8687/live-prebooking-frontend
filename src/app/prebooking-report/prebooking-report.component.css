@@ -1,0 +1,73 @@
+.store-filter, .month-year-filter {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.store-filter label, .month-year-filter label {
+  font-size: 1.2rem;
+  margin-right: 10px;
+  color: #1ab394 ;
+}
+
+.store-filter select, .month-year-filter select {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #1ab394 ;
+  border-radius: 5px;
+  background-color: #1ab394 ;
+  color: #ffffff;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.store-filter select:hover, .month-year-filter select:hover {
+  border-color: #1ab394 ;
+  box-shadow: 0 0 8px #1ab394 ;
+}
+
+.store-filter select:focus, .month-year-filter select:focus {
+  outline: none;
+  border-color: #1ab394 ;
+  box-shadow: 0 0 8px #1ab394 ;
+}
+
+.store-filter option, .month-year-filter option {
+  padding: 10px;
+  background-color: #1a97b3;
+  color: #ffffff;
+}
+
+.store-filter option:hover, .month-year-filter option:hover {
+  background-color: #1ab394 ;
+}
+.flex-container {
+  display: flex;
+  align-items: center; /* Aligns items vertically centered */
+  gap: 20px; /* Adjust the spacing between the filters */
+}
+
+.store-filter, .month-year-filter {
+  display: flex;
+  align-items: center; /* Align label and select vertically centered */
+}
+
+label {
+  margin-right: 10px; /* Space between label and select */
+}
+
+  .success-message {
+    background-color: #868986; /* Background color */
+    color: white; /* White text */
+    padding: 15px; /* Some padding */
+    margin: 0 auto 20px auto; /* Center the message with margin below */
+    border-radius: 5px; /* Rounded corners */
+    text-align: center; /* Center text */
+    transition: opacity 0.5s ease; /* Smooth transition for fading out */
+    max-width: 300px; /* Set maximum width */
+    width: 80%; /* Set width to 80% of the container */
+    margin-top: 10px;
+}
+h2{
+  text-align: center;
+  font-weight: 900;
+}

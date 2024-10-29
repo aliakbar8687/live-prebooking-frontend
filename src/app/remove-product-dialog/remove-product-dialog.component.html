@@ -1,0 +1,8 @@
+<div mat-dialog-content style="background-color: #c0f6c0; padding: 20px; border: 2px solid #1ab394; border-radius: 8px;">
+  <p style="color: #1ab394;">Are you sure you want to remove the product "{{ data.product }}"?</p>
+</div>
+
+<div mat-dialog-actions style="display: flex; justify-content: flex-end; margin-top: 15px;">
+  <button mat-button (click)="onNoClick()" style="color: #fff; background-color: #1ab394; border-radius: 5px; margin-left: 10px; padding: 8px 16px;">Cancel</button>
+  <button mat-button (click)="dialogRef.close(true)" cdkFocusInitial style="color: #fff; background-color: #1ab394; border-radius: 5px; margin-left: 10px; padding: 8px 16px;">Remove</button>
+</div>

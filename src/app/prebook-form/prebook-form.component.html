@@ -1,0 +1,157 @@
+<body>
+  
+<div class="container mt-4">
+  <h2>Prebooking Form</h2>
+
+    <!-- Display message -->
+    <div *ngIf="message" class="alert" [ngClass]="{ 'alert-success': message.includes('successfully'), 'alert-danger': message.includes('Error') }">
+      {{ message }}
+    </div>
+
+     <!-- Display message for product add/remove -->
+  <div *ngIf="productMessage" class="alert" [ngClass]="{ 'alert-success': productMessage.includes('successfully'), 'alert-danger': productMessage.includes('Error') }">
+    {{ productMessage }}
+  </div>
+
+  <form [formGroup]="prebookForm" (ngSubmit)="submitForm()">
+    <!-- Store Selection -->
+    <div class="form-group">
+      <label for="store"><i class="bi bi-menu-up"></i>&nbsp;Select a Store</label>
+      <select formControlName="store" class="form-control" id="store">
+        <option *ngFor="let store of filteredStores" [value]="store">{{ store }}</option>
+      </select>
+      <div *ngIf="prebookForm.get('store')?.invalid && prebookForm.get('store')?.touched" class="text-danger">Store is required.</div>
+    </div>
+
+<!-- Product Selection -->
+<div class="form-group">
+  <label for="category"><i class="bi bi-tag"></i>&nbsp;Choose a Category</label>
+  <select formControlName="category" class="form-control" id="category">
+    <option *ngFor="let category of categories" [value]="category">{{ category | uppercase}}</option>
+  </select>
+</div>
+
+<div class="form-group">
+  <label for="product"><i class="bi bi-menu-up"></i>&nbsp;Choose a Product</label>
+  <div class="d-flex align-items-center">
+    <select formControlName="product" class="form-control" id="product">
+      <option *ngFor="let product of products" [value]="product">{{ product | uppercase}}</option>
+    </select>
+    <button type="button" class="btn btn-success ms-2" (click)="openAddProductModal()">
+      <i class="bi bi-plus"></i>
+    </button>
+    <button type="button" class="btn btn-danger ms-2" (click)="openRemoveProductModal()">
+      <i class="bi bi-dash"></i>
+    </button>
+  </div>
+  <div *ngIf="prebookForm.get('product')?.invalid && prebookForm.get('product')?.touched" class="text-danger">Product is required.</div>
+</div>
+
+
+          <!-- Description -->
+    <div class="form-group">
+      <label for="description"><i class="bi bi-chat-right-text-fill"></i>&nbsp;Description</label>
+      <textarea formControlName="description" class="form-control" id="description" placeholder="Please enter RGC/WGC"></textarea>
+    </div>
+
+    <!-- Name -->
+    <div class="form-group">
+      <label for="name"><i class="bi bi-person-fill"></i>&nbsp;Customer Name</label>
+      <input formControlName="name" type="text" class="form-control" id="name">
+      <div *ngIf="prebookForm.get('name')?.invalid && prebookForm.get('name')?.touched" class="text-danger">Valid name is required.</div>
+    </div>
+
+    <!-- Phone -->
+    <div class="form-group">
+      <label for="phone"><i class="bi bi-123"></i>&nbsp;Customer Number</label>
+      <input formControlName="phone" type="text" class="form-control" id="phone">
+      <div *ngIf="prebookForm.get('phone')?.invalid && prebookForm.get('phone')?.touched" class="text-danger">Valid 10-digit phone number is required.</div>
+    </div>
+   
+        <!-- Voucher -->
+        <div class="form-group">
+          <label for="voucher"><i class="bi bi-gift"></i>&nbsp;Inaam / Rewards</label>
+          <input formControlName="voucher" type="text" class="form-control" id="voucher">
+        </div>
+
+
+    <!-- Amount -->
+    <div class="form-group">
+      <label for="amount"><i class="bi bi-cash-stack"></i>&nbsp;Total Amount ﷼&nbsp;</label>
+      <input formControlName="amount" type="number" class="form-control" id="amount">
+      <div *ngIf="prebookForm.get('amount')?.invalid && prebookForm.get('amount')?.touched" class="text-danger">Amount is required.</div>
+    </div>
+
+    <!-- Advance -->
+    <div class="form-group">
+      <label for="advance"><i class="bi bi-cash-stack"></i>&nbsp;Advance Payment ﷼&nbsp;</label>
+      <input formControlName="advance" type="number" class="form-control" id="advance">
+    </div>
+
+    <!-- Balance -->
+    <div class="form-group">
+      <label for="balance"><i class="bi bi-cash-stack"></i>&nbsp;Balance Amount ﷼&nbsp;</label>
+      <input formControlName="balance" type="number" class="form-control" id="balance" readonly>
+    </div>
+
+<!-- Booking Date -->
+<div class="form-group d-flex align-items-center" style="margin-bottom: 1rem;">
+  <label for="date" style="margin-right: 10px;"><i class="bi bi-calendar"></i>&nbsp;Booking Date</label>
+  <mat-form-field appearance="fill" style="flex-grow: 1;">
+    <input 
+      matInput 
+      [matDatepicker]="bookingDatepicker" 
+      formControlName="date" 
+      style="padding: 0.5rem; border-radius: 4px; border: 2px solid #8A2BE2; background-color: rgb(129, 225, 252);" 
+      [min]="minDate"
+      (focus)="bookingDatepicker.open()"
+    />
+    <mat-datepicker-toggle matSuffix [for]="bookingDatepicker" style="cursor: pointer;"></mat-datepicker-toggle>
+    <mat-datepicker #bookingDatepicker></mat-datepicker>
+    <div *ngIf="prebookForm.get('date')?.invalid && prebookForm.get('date')?.touched" class="text-danger" style="margin-top: 0.5rem;">Date is required.</div>
+  </mat-form-field>
+</div>
+
+<!-- Delivery Date -->
+<div class="form-group d-flex align-items-center" style="margin-bottom: 1rem;">
+  <label for="ddate" style="margin-right: 10px;"><i class="bi bi-calendar"></i>&nbsp;Delivery Date</label>
+  <mat-form-field appearance="fill" style="flex-grow: 1;">
+    <input 
+      matInput 
+      [matDatepicker]="deliveryDatepicker" 
+      formControlName="ddate" 
+      style="padding: 0.5rem; border-radius: 4px; border: 2px solid #8A2BE2; background-color: rgb(129, 225, 252);" 
+      [min]="minDate"
+      (focus)="deliveryDatepicker.open()"
+    />
+    <mat-datepicker-toggle matSuffix [for]="deliveryDatepicker" style="cursor: pointer;"></mat-datepicker-toggle>
+    <mat-datepicker #deliveryDatepicker></mat-datepicker>
+    <div *ngIf="prebookForm.get('ddate')?.invalid && prebookForm.get('ddate')?.touched" class="text-danger" style="margin-top: 0.5rem;">Delivery date is required.</div>
+  </mat-form-field>
+</div>
+
+
+
+
+
+
+
+    <!-- Bill -->
+    <div class="form-group" *ngIf="prebookForm.get('balance')?.value === 0">
+      <label for="bill"><i class="bi bi-receipt"></i>&nbsp;Bill</label>
+      <input formControlName="bill" type="text" class="form-control" id="bill">
+    </div>
+    <!-- Status -->
+    <div class="form-group">
+      <label for="status"><i class="bi bi-menu-button-wide"></i>&nbsp;Status</label>
+      <select formControlName="status" class="form-control" id="status">
+        <option value="pending">Pending</option>
+        <option value="paid">Paid</option>
+      </select>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-success" [disabled]="prebookForm.invalid">Submit</button>
+  </form>
+</div>
+</body>

@@ -1,0 +1,179 @@
+.container {
+  background-color: #f0f8f5; /* Light green background */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 0 auto; /* Center the form */
+}
+
+h2 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: #2f4f4f; /* Darker color for contrast */
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  font-family: 'Verdana', sans-serif;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.form-control {
+  padding: 10px;
+  border: 2px solid #1ab394 ; /* Red bold border for inputs */
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  border-color:#1a97b3; /* Green border on focus */
+  box-shadow: none;
+}
+
+textarea.form-control {
+  resize: none;
+  height: 100px;
+}
+
+button[type="submit"], .btn {
+  background-color: #1ab394 ; /* Green background */
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+  display: block;
+  width: 100%;
+}
+
+button[type="submit"]:hover, .btn:hover {
+  background-color:#1a97b3; /* Darker green on hover */
+}
+
+.alert {
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #1a97b3;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.text-danger {
+  color: #1ab394 ; /* Red color for validation errors */
+  font-size: 12px;
+}
+
+.captcha-box {
+  border: 2px solid #1ab394 ; /* Green border */
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #fff; /* White background */
+  display: flex; /* Flexbox for alignment */
+}
+
+.captcha-box input {
+  flex: 1; /* Make input take full width */
+  border: none; /* Remove border from input */
+  outline: none; /* Remove outline on focus */
+  padding: 5px; /* Padding inside input */
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.btn-success, .btn-danger {
+  font-size: 14px;
+  margin-left: 10px;
+  border-radius: 4px;
+  padding: 6px 12px;
+}
+
+.btn-success i, .btn-danger i {
+  font-size: 16px;
+}
+
+.btn-success:hover, .btn-danger:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .container {
+      padding: 20px;
+  }
+}
+
+.form-group select {
+  padding: 10px;
+  border: 2px solid #1ab394 ; /* Red bold border */
+  border-radius: 5px;
+  font-size: 14px;
+  width: 100%; /* Full width to match the button */
+  background-color: white; /* White background for dropdown */
+  appearance: none; /* Remove default dropdown styling */
+  background-image: url('data:image/png;base64,...'); /* Optional: Add custom dropdown arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Position the arrow */
+  background-size: 12px; /* Size of the arrow */
+}
+
+.form-group select:focus {
+  border-color:#1a97b3; /* Green border on focus */
+  box-shadow: none;
+  outline: none; /* Remove outline */
+}
+
+.form-group option {
+  padding: 10px; /* Padding for options */
+}
+
+.alert-success {
+  background-color: #d4edda; /* Light green background for success */
+  color: #1a97b3; /* Dark green text */
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.alert-danger {
+  background-color: #f8d7da; /* Light red background for errors */
+  color: #721c24; /* Dark red text */
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.text-danger {
+  color: #1ab394 ; /* Red color for validation errors */
+  font-size: 12px;
+}
+.company-image{
+  height: 300px;
+  width: 300px;
+  margin-left: 200px;
+  border-radius: 15px;
+  margin-bottom: 20px; 
+}

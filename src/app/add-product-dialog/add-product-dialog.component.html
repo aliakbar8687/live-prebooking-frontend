@@ -1,0 +1,25 @@
+<div class="container">
+  <h1 mat-dialog-title style="font-size: 24px; color: #1ab394; margin-bottom: 15px;">Add Product</h1>
+  <div mat-dialog-content style="background-color: #c0f6c0; padding: 20px; border: 2px solid #1ab394; border-radius: 8px;">
+    
+    <!-- Product Name Input -->
+    <mat-form-field appearance="fill" style="width: 100%;">
+      <mat-label style="color: #1ab394;">Product Name</mat-label>
+      <input matInput [(ngModel)]="newProduct" style="border: 1px solid #1ab394;" />
+    </mat-form-field>
+
+    <!-- Category Selection -->
+<!-- Category Input -->
+<mat-form-field appearance="fill" style="width: 100%; margin-top: 15px;">
+  <mat-label style="color: #1ab394;">Category</mat-label>
+  <input matInput [(ngModel)]="selectedCategory" style="border: 1px solid #1ab394;" />
+</mat-form-field>
+
+    
+  </div>
+  
+  <div mat-dialog-actions style="display: flex; justify-content: flex-end; margin-top: 15px;">
+    <button mat-button (click)="onNoClick()" style="color: #fff; background-color: #1ab394; border-radius: 5px; margin-left: 10px; padding: 8px 16px;">Cancel</button>
+    <button mat-button (click)="addProduct()" cdkFocusInitial style="color: #fff; background-color: #1ab394; border-radius: 5px; margin-left: 10px; padding: 8px 16px;">Add</button>
+  </div>
+</div>

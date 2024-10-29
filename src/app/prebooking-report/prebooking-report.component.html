@@ -1,0 +1,93 @@
+<div class="container">
+    <h2>Prebooking Report</h2>
+      <!-- Success message -->
+    <div *ngIf="showMessage && isAdmin" class="success-message">
+      {{ successMessage }}
+    </div>
+    <!-- Admin filters -->
+    <div class="filters flex-container">
+        <div  *ngIf="isAdmin" class="store-filter">
+          <label for="store">Filter by Store: </label>
+          <select id="store" [(ngModel)]="selectedStore" (change)="onStoreChange($event)">
+            <option value="">All Stores</option>
+            <option *ngFor="let store of availableStores" [value]="store">{{ store }}</option>
+          </select>
+        </div>
+      
+        <div class="month-year-filter">
+          <label for="monthYear">Filter by Month/Year: </label>
+          <select id="monthYear" [(ngModel)]="selectedMonthYear" (change)="onMonthYearChange($event)">
+            <option value="">All Dates</option>
+            <option *ngFor="let monthYear of availableMonthYears" [value]="monthYear">
+              {{ monthYear | date:'MMMM yyyy' }}
+            </option>
+          </select>
+        </div>
+      </div>
+      
+  
+
+  
+    <!-- Summary metrics -->
+    <div style="text-align: center; margin: 20px;">
+      <h2><i class="bi bi-cash-stack"></i>&nbsp;Total Sales: {{ formatCurrency(totalSales) }}</h2>
+      <h2><i class="bi bi-phone-fill"></i>&nbsp;Total Items Sold: {{ totalItemsSold }}</h2>
+    </div>
+  
+    <!-- Charts -->
+    <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin: 20px;">
+      <div style="width: 45%; border: 3px solid darkred; background-color: rgb(214, 214, 214); border-radius: 8px; padding: 10px; margin: 10px;">
+        <h3 style="text-align: center; font-weight: bold;">Sales Per Month</h3>
+        <ngx-charts-bar-vertical
+          [scheme]="colorScheme"
+          [results]="salesPerMonth"
+          [gradient]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showLabels]="true"
+          (select)="onSelect($event)"
+          style="height: 300px; width: 100%;">
+        </ngx-charts-bar-vertical>
+      </div>
+      
+      <div *ngIf="isAdmin" style="width: 45%; border: 3px solid darkred; background-color: rgb(214, 214, 214); border-radius: 8px; padding: 10px; margin: 10px;">
+        <h3 style="text-align: center; font-weight: bold;">Store Wise Sales</h3>
+        <ngx-charts-bar-vertical
+          [scheme]="colorScheme"
+          [results]="storeWiseSales"
+          [gradient]="false"
+          [xAxis]="true"
+          [yAxis]="true"
+          [showLabels]="true"
+          (select)="onSelect($event)"
+          style="height: 300px; width: 100%;">
+        </ngx-charts-bar-vertical>
+      </div>
+      
+      <div style="width: 45%; border: 3px solid darkred; background-color: rgb(214, 214, 214); border-radius: 8px; padding: 10px; margin: 10px;">
+        <h3 style="text-align: center; font-weight: bold;">Status</h3>
+        <ngx-charts-pie-chart
+          [scheme]="colorScheme"
+          [results]="statusWiseDistribution"
+          [exploded]="false"
+          [doughnut]="false"
+          [showLabels]="true"
+          (select)="onSelect($event)"
+          style="height: 300px; width: 100%;">
+        </ngx-charts-pie-chart>
+      </div>
+      
+      <div style="width: 45%; border: 3px solid darkred; background-color: rgb(214, 214, 214); border-radius: 8px; padding: 10px; margin: 10px;">
+        <h3 style="text-align: center; font-weight: bold;">Product Wise Sales</h3>
+        <ngx-charts-pie-chart
+          [scheme]="colorScheme"
+          [results]="productWiseSales"
+          [exploded]="false"
+          [doughnut]="false"
+          [showLabels]="true"
+          (select)="onSelect($event)"
+          style="height: 300px; width: 100%;">
+        </ngx-charts-pie-chart>
+      </div>
+    </div>
+  </div>

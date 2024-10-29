@@ -1,0 +1,190 @@
+.container {
+  background-color: #f0f8f5; /* Light green background */
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 700px;
+  margin: 0 auto; /* Center the form */
+}
+
+h2 {
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: #2f4f4f; /* Darker color for contrast */
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  font-family: 'Verdana', sans-serif;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.form-control {
+  padding: 10px;
+  border: 2px solid#1ab394 ; /* Red bold border for inputs */
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.form-control:focus {
+  border-color: #1a97b3; /* Green border on focus */
+  box-shadow: none;
+}
+
+textarea.form-control {
+  resize: none;
+  height: 100px;
+}
+
+button[type="submit"] {
+  background-color:#1ab394  ;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+  display: block;
+  width: 100%;
+}
+button[type="button"] {
+  background-color:#1ab394  ;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-top: 15px;
+  display: block;
+  width: 100%;
+}
+
+button[type="submit"]:hover ,button[type="button"]:hover{
+  background-color:#1a97b3; /* Darker green on hover */
+}
+
+.alert {
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.text-danger {
+  color:#1ab394 ; /* Red color for validation errors */
+  font-size: 12px;
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+}
+
+.btn-success, .btn-danger {
+  font-size: 14px;
+  margin-left: 10px;
+  border-radius: 4px;
+  padding: 6px 12px;
+}
+
+.btn-success i, .btn-danger i {
+  font-size: 16px;
+}
+
+.btn-success:hover, .btn-danger:hover {
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .container {
+      padding: 20px;
+  }
+}
+
+/* PRINT STYLES */
+@media print {
+  /* Show the print section */
+  #printSection {
+      display: block !important;
+  }
+
+  /* Hide unnecessary elements like the sidebar, buttons, alerts, navbar, and validation messages */
+  .sidebar, button, .alert, .text-danger, .navbar {
+      display: none !important;
+  }
+
+  /* Adjust the layout and appearance of the print section */
+  #printSection {
+      background-color: #fff; /* White background for clean print */
+      padding: 20px;
+      border: 2px solid #000; /* Black border around the print section */
+      margin: 20px; /* Add some margin to the printed content */
+  }
+
+  /* Ensure the form data is printed with larger, bolder text */
+  #printSection p {
+      font-size: 18px; /* Larger font size for print */
+      margin: 10px 0;
+      font-weight: bold;
+  }
+
+  /* Styling for company information (logo and name) */
+  .company-info h1 {
+      font-size: 24px; /* Large bold title for company name */
+      margin: 10px 0;
+      text-align: center;
+      font-weight: bold;
+  }
+
+  .company-info img {
+      display: block;
+      margin: 0 auto;
+      width: 150px; /* Adjust the logo size as needed */
+  }
+
+  /* Additional styles for a clean print */
+  .printable-content {
+      margin-top: 20px;
+      font-size: 18px; /* Larger font size for print */
+      line-height: 1.5;
+  }
+
+  /* Ensure form labels and fields are readable */
+  label, .form-control {
+      font-size: 18px;
+      font-weight: bold;
+  }
+
+  /* Hide the non-printable parts on the screen */
+  @media screen {
+      #printSection {
+          display: none !important;
+      }
+  }
+}
+
+textarea::placeholder {
+  color: #1a97b3;      /* Set the text color to orange */
+  font-weight: bold;  /* Make the text bold */
+}

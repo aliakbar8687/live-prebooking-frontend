@@ -1,0 +1,97 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+/* Sidebar container */
+.sidebar {
+  background-color: #027e9a;  /* Dark background color */
+  color: #ecf0f1;  /* Light text color */
+  min-height: 100vh;  /* Full viewport height */
+  width: 320px;  /* Fixed width for the sidebar */
+  position: fixed;  /* Keep sidebar fixed */
+  top: 0;
+  left: 0;
+  overflow-y: auto;  /* Allow scrolling if content exceeds height */
+  transition: all 0.3s ease;  /* Smooth transition for background color changes */
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);  /* Subtle shadow for depth */
+  font-family: 'Poppins', sans-serif;  /* Apply Poppins font to all text */
+}
+
+/* Navigation list */
+.sidebar ul {
+  padding: 0;  /* Remove default padding */
+  list-style-type: none;  /* Remove default list styles */
+}
+
+/* Navigation items */
+.sidebar li {
+  margin: 20px 0;  /* Increased space between each list item */
+}
+
+/* Navigation links */
+.sidebar a {
+  color: #ecf0f1;  /* Link color */
+  padding: 15px 20px;  /* Padding for links */
+  display: block;  /* Block display for full width */
+  text-decoration: none;  /* Remove underline from links */
+  transition: background-color 0.3s ease, color 0.3s ease;  /* Smooth transition for hover effects */
+  border-radius: 5px;  /* Rounded corners for links */
+  font-size: 1.5rem;  /* Increased font size for links */
+  font-weight: bold;  /* Make text bold */
+}
+
+/* Hover and active states for links */
+.sidebar a:hover,
+.sidebar a:focus {
+  background-color:#025b6f;  /* Darker background on hover */
+  color:  #1ab394 ;  /* Green color on hover */
+}
+
+/* Active link */
+.sidebar a.active {
+  background-color:  #1ab394 ;  /* Highlight active link with green */
+  color: #fff;  /* Change text color to white */
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;  /* Full width on small screens */
+    position: relative;  /* Position relative on small screens */
+  }
+
+  .sidebar a {
+    padding: 15px 25px;  /* More padding on smaller screens */
+    font-size: 1.4rem;  /* Slightly smaller font size on mobile, but still larger */
+  }
+}
+.user-role {
+  padding: 10px;
+  background-color: #f8f9fa; /* Light background */
+  border-bottom: 1px solid #dee2e6; /* Light border */
+  text-align: center; /* Center the text */
+  font-weight:900; /* Make it bold */
+  color: black;
+  font-size: 1.5rem;
+}
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed; /* Fixed position to cover the entire viewport */
+  top: 0;          /* Align to the top */
+  left: 0;         /* Align to the left */
+  width: 100%;     /* Full width */
+  height: 100%;    /* Full height */
+  background-color: rgba(255, 255, 255, 0.8); /* Optional: white background with slight transparency */
+  z-index: 99999;   /* Ensure it's on top of other elements */
+}
+.current-date-time {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: 20px;
+
+}
+.clickable {
+  cursor: pointer;
+}
+.dashboard:hover , .user-role:hover, .current-date-time:hover {color: #1a97b3}

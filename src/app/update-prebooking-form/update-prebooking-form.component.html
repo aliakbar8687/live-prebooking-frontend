@@ -1,0 +1,186 @@
+<div class="container mt-4">
+  <h2>Update Prebooking Form</h2>
+
+  <div *ngIf="message" class="alert" [ngClass]="{ 'alert-success': message.includes('successfully'), 'alert-danger': message.includes('Error') }">
+    {{ message }}
+  </div>
+
+
+  <form [formGroup]="prebookForm" (ngSubmit)="submitForm()">
+    <!-- Store Selection -->
+    <div class="form-group">
+      <label for="store"><i class="bi bi-menu-up"></i>&nbsp;Store Selected</label>
+      <select formControlName="store" class="form-control" id="store">
+          <option *ngFor="let store of filteredStores" [value]="store">{{ store }}</option>
+      </select>
+      <div *ngIf="prebookForm.get('store')?.invalid && prebookForm.get('store')?.touched" class="text-danger">Store is required.</div>
+  </div>
+  
+  <!-- Product Selection -->
+  <div class="form-group">
+      <label for="product"><i class="bi bi-menu-up"></i>&nbsp;Product Selected</label>
+      <select formControlName="product" class="form-control" id="product">
+          <option *ngFor="let product of products" [value]="product">{{ product }}</option>
+      </select>
+      <div *ngIf="prebookForm.get('product')?.invalid && prebookForm.get('product')?.touched" class="text-danger">Product is required.</div>
+  </div>
+  
+
+    <div class="form-group">
+      <label for="description"><i class="bi bi-chat-right-text-fill"></i>&nbsp;Description</label>
+      <textarea formControlName="description" class="form-control" id="description" placeholder="Please enter RGC/WGC"></textarea>
+    </div>
+
+    <!-- Other Fields (Name, Phone, Description, Amount, etc.) -->
+    <div class="form-group">
+      <label for="name"><i class="bi bi-person-fill"></i>&nbsp;Customer Name</label>
+      <input formControlName="name" type="text" class="form-control" id="name">
+      <div *ngIf="prebookForm.get('name')?.invalid && prebookForm.get('name')?.touched" class="text-danger">Valid name is required.</div>
+    </div>
+
+    <div class="form-group">
+      <label for="phone"><i class="bi bi-123"></i>&nbsp;Customer Phone</label>
+      <input formControlName="phone" type="text" class="form-control" id="phone">
+      <div *ngIf="prebookForm.get('phone')?.invalid && prebookForm.get('phone')?.touched" class="text-danger">Valid 10-digit phone number is required.</div>
+    </div>
+
+
+
+    <!-- Amount Field -->
+    <div class="form-group">
+      <label for="amount"><i class="bi bi-cash-stack"></i>&nbsp;Amount ﷼&nbsp;</label>
+      <input formControlName="amount" type="number" class="form-control" id="amount" (input)="updateBalance()">
+      <div *ngIf="prebookForm.get('amount')?.invalid && prebookForm.get('amount')?.touched" class="text-danger">Amount is required.</div>
+    </div>
+
+    <!-- Advance Field -->
+    <div class="form-group">
+      <label for="advance"><i class="bi bi-cash-stack"></i>&nbsp;Advance﷼&nbsp;</label>
+      <input formControlName="advance" type="number" class="form-control" id="advance" (input)="updateBalance()">
+      <div *ngIf="prebookForm.get('advance')?.invalid && prebookForm.get('advance')?.touched" class="text-danger">Advance must be a positive number.</div>
+    </div>
+
+    <!-- Balance (Readonly) -->
+    <div class="form-group">
+      <label for="balance"><i class="bi bi-cash-stack"></i>&nbsp;Balance﷼&nbsp;</label>
+      <input formControlName="balance" type="number" class="form-control" id="balance" readonly>
+    </div>
+
+    <!-- Booking Date -->
+    <div class="form-group">
+      <label for="date"><i class="bi bi-calendar"></i>&nbsp;Booking Date</label>
+      <input formControlName="date" type="date" class="form-control" id="date" [min]="minDate | date: 'yyyy-MM-dd'">
+      <div *ngIf="prebookForm.get('date')?.invalid && prebookForm.get('date')?.touched" class="text-danger">Booking date is required.</div>
+    </div>
+
+    <!-- Delivery Date -->
+    <div class="form-group">
+      <label for="ddate"><i class="bi bi-calendar"></i>&nbsp;Delivery Date</label>
+      <input formControlName="ddate" type="date" class="form-control" id="ddate" [min]="minDate | date: 'yyyy-MM-dd'">
+      <div *ngIf="prebookForm.get('ddate')?.invalid && prebookForm.get('ddate')?.touched" class="text-danger">Delivery date is required.</div>
+    </div>
+
+    <!-- Voucher -->
+    <div class="form-group">
+      <label for="voucher"><i class="bi bi-gift"></i>&nbsp;Inaam / Rewards</label>
+      <input formControlName="voucher" type="text" class="form-control" id="voucher">
+    </div>
+
+    <!-- Bill -->
+    <div class="form-group" *ngIf="prebookForm.get('balance')?.value === 0">
+      <label for="bill"><i class="bi bi-receipt"></i>&nbsp;Bill</label>
+      <input formControlName="bill" type="text" class="form-control" id="bill">
+    </div>
+
+    <!-- Status -->
+    <div class="form-group">
+      <label for="status"><i class="bi bi-menu-button-wide"></i>&nbsp;Status</label>
+      <select formControlName="status" class="form-control" id="status">
+        <option value="pending">Pending</option>
+        <option value="paid" >Paid</option>
+      </select>
+    </div>
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary" [disabled]="prebookForm.invalid">Update Prebooking</button>
+    <button type="button" class="btn btn-secondary" (click)="printForm()"><i class="bi bi-printer"></i>&nbsp;Print Form</button>
+  </form>
+
+
+
+
+  <!-- Print Section -->
+<!-- Print Section -->
+<div id="printSection" class="d-none">
+  <h2 style="clear: left;">Gift Voucher - PreBooking</h2>
+
+  <div class="company-info">
+    <img src="\images\logo.jpg" alt="Company Logo" style="height: 150px; width: 350px; float: left; margin-right: 20px;" />
+
+    <h1 style="clear: left;">Western International Group</h1>
+    <h2 style="clear: left;">Product ID: {{ uniqueId }}</h2>
+    
+    
+  </div>
+  <div class="printable-content" style="font-size: 1.4rem; font-weight: 900;">
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Store:</span> 
+      <span style="flex: 1; text-align: left;">{{ prebookForm.get('store')?.value | capitalize }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Product:</span> 
+      <span style="flex: 1; text-align: left;">{{ prebookForm.get('product')?.value | capitalize }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Name:</span> 
+      <span style="flex: 1; text-align: left;">{{ prebookForm.get('name')?.value | capitalize }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Phone:</span> 
+      <span style="flex: 1; text-align: left;">{{ prebookForm.get('phone')?.value }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Description:</span> 
+      <span style="flex: 1; text-align: left;">{{ prebookForm.get('description')?.value | capitalize }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Amount:</span> 
+      <span style="flex: 1; text-align: left;">﷼&nbsp;{{ prebookForm.get('amount')?.value }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Advance:</span> 
+      <span style="flex: 1; text-align: left;">﷼&nbsp;{{ prebookForm.get('advance')?.value }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Balance:</span> 
+      <span style="flex: 1; text-align: left;">﷼&nbsp;{{ prebookForm.get('balance')?.value }}</span>
+    </div>
+    
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Booking Date:</span> 
+      <span style="flex: 1; text-align: left;">{{ prebookForm.get('date')?.value }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Exp. Delivery Date:</span> 
+      <span style="flex: 1; text-align: left;">{{ prebookForm.get('ddate')?.value }}</span>
+    </div>
+    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Voucher:</span> 
+      <span style="flex: 1; text-align: left;">{{ prebookForm.get('voucher')?.value }}</span>
+    </div>
+    <div *ngIf="prebookForm.get('balance')?.value === 0" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Bill:</span> 
+      <span style="flex: 1; text-align: left;">{{ prebookForm.get('bill')?.value }}</span>
+    </div>
+    <div  style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+      <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Status:</span> 
+      <span style="flex: 1; text-align: left;">{{ prebookForm.get('status')?.value | capitalize }}</span>
+    </div>
+  </div>
+  
+
+</div>
+
+
+
+

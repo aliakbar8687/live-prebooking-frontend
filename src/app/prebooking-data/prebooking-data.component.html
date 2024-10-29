@@ -1,0 +1,84 @@
+<div class="container mt-4">
+  <h2>Prebooking Data</h2>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+  <button class="btn btn-primary mb-3" (click)="goToPrebookingForm()">Add New Prebooking&nbsp;<i class="bi bi-bag-plus-fill"></i>&nbsp;</button>
+
+  <div class="row mb-3">
+    <div class="col-md-6 me-3">
+      <input type="text" [(ngModel)]="searchText" placeholder="Search" class="form-control" />
+    </div>
+    <div class="col-md-3">
+      <select [(ngModel)]="itemsPerPage" (change)="onItemsPerPageChange(itemsPerPage)" class="form-control">
+        <option *ngFor="let option of itemsPerPageOptions" [value]="option">
+          {{ option }} items per page
+        </option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <button class="btn btn-success" (click)="exportToExcel()">Export to Excel&nbsp;<i class="bi bi-file-spreadsheet"></i></button>
+    </div>
+  </div>
+
+  <table class="table table-striped" id="prebookingTable">
+    <thead>
+      <tr>
+        <th>Unique ID</th>
+        <th>Store</th>
+        <th>Product</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Advance</th>
+        <th>Balance</th>
+        <th>Date</th>
+        <th>Due Date</th>
+        <th>Voucher</th>
+        <th>Bill</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let prebooking of filteredData | filter:searchText | paginate: { itemsPerPage: itemsPerPage, currentPage: page }">
+        <td (click)="openModal(prebooking.uniqueId)" style="cursor: pointer;">{{ prebooking.uniqueId | capitalize }}</td>
+        <td>{{ prebooking.store | capitalize }}</td>
+        <td>{{ prebooking.product | capitalize }}</td>
+        <td>{{ prebooking.name | capitalize }}</td>
+        <td>{{ prebooking.phone | capitalize }}</td>
+        <td>{{ prebooking.description | capitalize }}</td>
+        <td>﷼&nbsp;{{ prebooking.amount }}</td>
+        <td>﷼&nbsp;{{ prebooking.advance }}</td>
+        <td>﷼&nbsp;{{ prebooking.balance }}</td>
+        <td>{{ prebooking.date | date: 'dd MMMM yyyy' }}</td>
+        <td>{{ prebooking.ddate | date: 'dd MMMM yyyy' }}</td>
+        <td>{{ prebooking.voucher | capitalize }}</td>
+        <td>{{ prebooking.bill | capitalize }}</td>
+        <td>{{ prebooking.status | capitalize }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <pagination-controls (pageChange)="page = $event"></pagination-controls>
+
+  <!-- Modal for Prebooking Actions -->
+  <div class="modal" tabindex="-1" role="dialog" *ngIf="isModalOpen">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Select Action for {{ selectedUniqueId }}</h5>
+          <button type="button" class="close" (click)="closeModal()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>What would you like to do?</p>
+          <button class="btn btn-primary me-3" (click)="updateBooking()"><i class="bi bi-pencil"></i>&nbsp;Update / Print Product Booking&nbsp;<i class="bi bi-printer-fill"></i></button>
+          <button class="btn btn-secondary me-3" (click)="createTicket()">Create/Update Booking Ticket &nbsp;<i class="bi bi-cloud-arrow-up"></i></button>
+          <button class="btn btn-secondary me-3" (click)="deletePrebooking(selectedUniqueId)">Delete Prebooking&nbsp;<i class="bi bi-trash"></i></button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

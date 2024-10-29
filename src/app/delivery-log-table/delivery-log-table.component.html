@@ -1,0 +1,143 @@
+<div class="container">
+  <h2>Delivery Log for {{ selectedStore }} - {{ selectedVehicle }}</h2>
+  <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+  <button class="btn btn-primary mb-1 me-2" (click)="openModal()">Add Delivery Log &nbsp;<i class="bi bi-bag-plus-fill"></i></button>
+  <button class="btn btn-primary mb-1" (click)="exportToExcel()">Export to Excel &nbsp;<i class="bi bi-file-spreadsheet"></i></button>
+
+  <table *ngIf="deliveryLogs.length > 0" class="table mt-4">
+    <thead>
+      <tr>
+        <th>Store</th>
+        <th>Vehicle/Driver Name</th>
+        <th>Date</th>
+        <th>Vehicle Number</th>
+        <th>Trip Count</th>
+        <th>Number of Orders</th>
+        <th>Amount</th>
+        <th>Remarks</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let log of deliveryLogs">
+        <td>{{ log.store }}</td>
+        <td>{{ log.vehiclename }}</td>
+        <td>{{ log.date | date:'dd MMM yyyy' }}</td>
+        <td>{{ log.vehiclenumber | uppercase }}</td>
+        <td>{{ log.tripcount }}</td>
+        <td>{{ log.numoforder }}</td>
+        <td>
+          ﷼&nbsp;{{ log.amount }}
+      </td>
+      
+      
+        <td>{{ log.remarks | uppercase }}</td>
+        <td>
+          <button class="btn btn-warning me-2" (click)="editDeliveryLog(log)">Edit &nbsp;<i class="bi bi-pencil-square"></i></button>
+          <button class="btn btn-danger" (click)="deleteDeliveryLog(log.id)">Delete &nbsp;<i class="bi bi-trash"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <p *ngIf="deliveryLogs.length === 0">No delivery logs found for the selected store and vehicle.</p>
+  <!-- Totals Row -->
+<div *ngIf="deliveryLogs.length > 0" class="mt-4 total">
+  <h5>Totals:</h5>
+  <p><strong>Total Trip Count&nbsp;<i class="bi bi-handbag-fill"></i>:</strong> {{ totalTripCount }}</p>
+  <p><strong>Total Number of Orders&nbsp;<i class="bi bi-phone-fill"></i>:</strong> {{ totalNumOfOrders }}</p>
+  <p><strong>Total Amount&nbsp;<i class="bi bi-cash-stack"></i>:</strong> ﷼&nbsp;{{ totalAmount | number:'1.2-2' }}</p>
+</div>
+
+  <!-- Modal -->
+  <div class="modal" tabindex="-1" role="dialog" [ngClass]="{'show': isModalOpen}" [style.display]="isModalOpen ? 'block' : 'none'">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">{{ isEdit ? 'Edit' : 'Add' }} Delivery Log</h5>
+          <button type="button" class="close" (click)="closeModal()">
+            <span>&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #deliveryForm="ngForm" (ngSubmit)="isEdit ? updateDeliveryLog() : addDeliveryLog()">
+  
+            <!-- Store Field -->
+            <div class="form-group">
+              <label for="store"><i class="bi bi-shop-window"></i>&nbsp;Store</label>
+              <input type="text" class="form-control" id="store" [(ngModel)]="deliveryLog.store" name="store" required readonly>
+              <div *ngIf="deliveryForm.submitted && !deliveryForm.controls['store'].valid" class="text-danger">
+                Store is required.
+              </div>
+            </div>
+            
+            <!-- Vehicle Name Field -->
+            <div class="form-group">
+              <label for="vehicleName"><i class="bi bi-truck"></i>&nbsp;Vehicle/Driver Name</label>
+              <input type="text" class="form-control" id="vehicleName" [(ngModel)]="deliveryLog.vehiclename" name="vehicleName" required readonly>
+              <div *ngIf="deliveryForm.submitted && !deliveryForm.controls['vehicleName'].valid" class="text-danger">
+                Vehicle Name is required.
+              </div>
+            </div>
+            
+  
+            <!-- Date Field -->
+            <div class="form-group">
+              <label for="date"><i class="bi bi-calendar-check-fill"></i>&nbsp;Date</label>
+              <input type="date" class="form-control" id="date" [(ngModel)]="deliveryLog.date" name="date" required>
+              <div *ngIf="deliveryForm.submitted && !deliveryForm.controls['date'].valid" class="text-danger">
+                Date is required.
+              </div>
+            </div>
+  
+            <!-- Vehicle Number Field -->
+            <div class="form-group">
+              <label for="vehicleNumber"><i class="bi bi-truck"></i>&nbsp;Vehicle Number</label>
+              <input type="text" class="form-control" id="vehicleNumber" [(ngModel)]="deliveryLog.vehiclenumber" name="vehicleNumber" required readonly>
+              <div *ngIf="deliveryForm.submitted && !deliveryForm.controls['vehicleNumber'].valid" class="text-danger">
+                Vehicle Number is required.
+              </div>
+            </div>
+  
+            <!-- Trip Count Field -->
+            <div class="form-group">
+              <label for="tripCount"><i class="bi bi-arrow-counterclockwise"></i>&nbsp;Trip Count</label>
+              <input type="number" class="form-control" id="tripCount" [(ngModel)]="deliveryLog.tripcount" name="tripCount" required>
+              <div *ngIf="deliveryForm.submitted && !deliveryForm.controls['tripCount'].valid" class="text-danger">
+                Trip Count is required.
+              </div>
+            </div>
+  
+            <!-- Number of Orders Field -->
+            <div class="form-group">
+              <label for="numOfOrders"><i class="bi bi-handbag-fill"></i>&nbsp;Number of Orders</label>
+              <input type="number" class="form-control" id="numOfOrders" [(ngModel)]="deliveryLog.numoforder" name="numOfOrders" required>
+              <div *ngIf="deliveryForm.submitted && !deliveryForm.controls['numOfOrders'].valid" class="text-danger">
+                Number of Orders is required.
+              </div>
+            </div>
+  
+            <!-- Amount Field -->
+            <div class="form-group">
+              <label for="amount"> <i class="bi bi-cash-stack"></i>&nbsp;  Amount ﷼&nbsp;</label>
+              <input type="number" class="form-control" id="amount" [(ngModel)]="deliveryLog.amount" name="amount" required>
+              <div *ngIf="deliveryForm.submitted && !deliveryForm.controls['amount'].valid" class="text-danger">
+                Amount is required.
+              </div>
+            </div>
+  
+            <!-- Remarks Field -->
+            <div class="form-group">
+              <label for="remarks"><i class="bi bi-bookmark-fill"></i>&nbsp;Remarks</label>
+              <textarea class="form-control" id="remarks" [(ngModel)]="deliveryLog.remarks" name="remarks"></textarea>
+            </div>
+  
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary">{{ isEdit ? 'Update' : 'Add' }}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

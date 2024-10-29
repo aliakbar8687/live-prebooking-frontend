@@ -1,0 +1,101 @@
+<div class="container">
+    <h2>Delivery Log Book</h2>
+    <div *ngIf="successMessage" class="alert alert-success" role="alert">
+      {{ successMessage }}
+    </div>
+    <!-- Store selection for admin -->
+    <div *ngIf="isAdmin" class="form-group">
+      <label for="store"><i class="bi bi-check2-square"></i>&nbsp;Select Store:</label>
+      <select id="store" [(ngModel)]="selectedStore" (ngModelChange)="onStoreChange()" class="form-control">
+        <option value="">Select a store</option>
+        <option *ngFor="let store of stores" [value]="store">{{store}}</option>
+      </select>
+    </div>
+    
+    <!-- Display store for non-admin users -->
+    <div *ngIf="!isAdmin" class="form-group">
+      <label>Store:</label>
+      <p>{{ userStore }}</p>
+    </div>
+    
+    <!-- Vehicle selection -->
+    <div class="form-group">
+      <label for="vehicle"><i class="bi bi-check2-square"></i>&nbsp;Select Vehicle:</label>
+      <select id="vehicle" [(ngModel)]="selectedVehicle" class="form-control">
+        <option value="">Select a vehicle</option>
+        <option *ngFor="let vehicle of vehicles" [value]="vehicle.vehiclename">
+          {{ vehicle.vehiclename }} 
+        </option>
+      </select>
+    </div>
+    
+    <!-- Conditional logic to show appropriate button -->
+    <button *ngIf="canViewDeliveryLog()" (click)="viewDeliveryLog()" class="btn btn-primary">View Delivery Log &nbsp;<i class="bi bi-eye-fill"></i></button>
+    <button *ngIf="!canViewDeliveryLog()" (click)="openAddVehicleModal()" class="btn btn-secondary">Add Vehicle &nbsp;<i class="bi bi-truck"></i></button>
+    
+    <!-- Delivery logs table -->
+    <table *ngIf="deliveryLogs.length > 0" class="table mt-4">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Store</th>
+          <th>Vehicle/Driver Name</th>
+          <th>Date</th>
+          <th>Vehicle Number</th>
+          <th>Trip Count</th>
+          <th>Number of Orders</th>
+          <th>Amount</th>
+          <th>Remarks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let log of deliveryLogs">
+          <td>{{ log.id }}</td>
+          <td>{{ log.store }}</td>
+          <td>{{ log.vehiclename }}</td>
+          <td>{{ log.date }}</td>
+          <td>{{ log.vehiclenumber }}</td>
+          <td>{{ log.tripcount }}</td>
+          <td>{{ log.numoforder }}</td>
+          <td>{{ log.amount }}</td>
+          <td>{{ log.remarks }}</td>
+        </tr>
+      </tbody>
+    </table>
+    
+  <!-- Add Vehicle Modal -->
+  <div *ngIf="showAddVehicleModal" class="modal">
+    <div class="modal-container">
+      <div class="modal-content">
+        <h3>Add New Vehicle &nbsp;<i class="bi bi-truck"></i></h3>
+        
+        <div *ngIf="successMessage" class="alert" [ngClass]="{'alert-success': !successMessage.includes('Error'), 'alert-danger': successMessage.includes('Error')}" role="alert">
+          {{ successMessage }}
+        </div>
+  
+        <!-- Store Selection for the Vehicle -->
+        <div class="form-group">
+          <label for="modalStore">&nbsp;<i class="bi bi-check2-square"></i>Select Store:</label>
+          <select id="modalStore" [(ngModel)]="newVehicle.store" class="form-control" required>
+            <option value="">Select a store</option>
+            <option *ngFor="let store of stores" [value]="store">{{ store }}</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="vehicleName">&nbsp;<i class="bi bi-truck"></i>Vehicle Name:</label>
+          <input id="vehicleName" [(ngModel)]="newVehicle.vehiclename" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="vehicleNumber">&nbsp;<i class="bi bi-truck"></i>Vehicle Number:</label>
+          <input id="vehicleNumber" [(ngModel)]="newVehicle.vehiclenumber" class="form-control" required>
+        </div>
+        
+        <button (click)="addVehicle()" class="btn btn-success" [disabled]="!newVehicle.store || !newVehicle.vehiclename || !newVehicle.vehiclenumber">Add Vehicle</button>
+        <button (click)="closeAddVehicleModal()" class="btn btn-danger">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  </div>
+  
