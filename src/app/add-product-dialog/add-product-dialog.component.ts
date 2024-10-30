@@ -25,7 +25,7 @@ export class AddProductDialogComponent {
   }
 
   addProduct() {
-    this.dialogRef.close({ product: this.newProduct, category: this.selectedCategory });
+    this.dialogRef.close({ product: this.newProduct, category: 'mobile' });
   }
 
   // Add this method to filter categories based on input

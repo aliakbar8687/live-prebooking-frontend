@@ -21,7 +21,9 @@ export class PrebookFormComponent implements OnInit {
     "SANAYA - 8335", "SHAQRA - 8340", "ARRAS - 8345", "MAJMA - 8350", "BURAIDA - 8355",
     "MINA PORT - 8415", "KHOBAR - 8420", "JUBAIL - 8425", "AL HASSA - 8430", "DABBAB - 8435",
     "BUDGET FOOD - 8485", "TUWAIQ - 9551", "EXIT16 - 9552", "MALAZ - 9553", "MAKKAH - 9651", 
-    "TAIF - 9652"
+    "TAIF - 9652", "KHURAIS - 9555",
+     "SHOLAY - 9554",
+    " SHIFA - 9556"
   ];
   filteredStores: string[] = [];
   products: string[] = [];
@@ -41,7 +43,7 @@ export class PrebookFormComponent implements OnInit {
   ) {
     this.prebookForm = this.fb.group({
       store: ['', Validators.required],
-      category: ['', Validators.required],
+      category: [''],
       product: ['', Validators.required],
       name: ['', [Validators.required, Validators.minLength(3)]],
       phone: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]],
@@ -118,20 +120,13 @@ export class PrebookFormComponent implements OnInit {
   }
 
   filterProducts() {
-    const selectedStore = this.prebookForm.get('store')?.value; // Currently not used in filtering as it's not in your data structure
     const selectedCategory = this.prebookForm.get('category')?.value;
-  
+
     if (selectedCategory) {
       // Fetch products first to filter them
       this.prebookFormService.getProducts().subscribe(
         (data: any) => {
-          // Assuming 'data' has the structure of products from dropdowndata
           const filteredProducts = data.filter((product: any) => product.category === selectedCategory);
-          
-          // Log the filtered results for debugging
-          console.log('Filtered Products:', filteredProducts);
-  
-          // Update products based on the filtered results
           this.products = filteredProducts.map((product: any) => product.productName);
         },
         (error) => {
@@ -139,10 +134,11 @@ export class PrebookFormComponent implements OnInit {
         }
       );
     } else {
-      // Reset products if no category is selected
-      this.products = [];
+      // If no category is selected, show all products
+      this.loadProductDropdown();
     }
   }
+
   
 
   openAddProductModal() {

@@ -112,73 +112,86 @@
   <!-- Print Section -->
 <!-- Print Section -->
 <div id="printSection" class="d-none">
-  <h2 style="clear: left;">Gift Voucher - PreBooking</h2>
+  <h2 style="clear: left; font-size: 20px; margin-bottom: 25px;">Gift Voucher - PreBooking</h2>
 
   <div class="company-info">
-    <img src="\images\logo.jpg" alt="Company Logo" style="height: 150px; width: 350px; float: left; margin-right: 20px;" />
-
-    <h1 style="clear: left;">Western International Group</h1>
-    <h2 style="clear: left;">Product ID: {{ uniqueId }}</h2>
-    
-    
+    <h1 style="clear: left; font-size: 20px; margin-bottom: 15px;">Western International Group</h1>
+    <h2 style="clear: left; font-size: 18px; margin-bottom: 30px;">Product ID: {{ uniqueId }}</h2>
   </div>
-  <div class="printable-content" style="font-size: 1.4rem; font-weight: 900;">
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+
+  <div class="printable-content" style="font-size: 18px; font-weight: 500;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Store:</span> 
       <span style="flex: 1; text-align: left;">{{ prebookForm.get('store')?.value | capitalize }}</span>
     </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Product:</span> 
       <span style="flex: 1; text-align: left;">{{ prebookForm.get('product')?.value | capitalize }}</span>
     </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Name:</span> 
       <span style="flex: 1; text-align: left;">{{ prebookForm.get('name')?.value | capitalize }}</span>
     </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Phone:</span> 
       <span style="flex: 1; text-align: left;">{{ prebookForm.get('phone')?.value }}</span>
     </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Description:</span> 
       <span style="flex: 1; text-align: left;">{{ prebookForm.get('description')?.value | capitalize }}</span>
     </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Amount:</span> 
       <span style="flex: 1; text-align: left;">﷼&nbsp;{{ prebookForm.get('amount')?.value }}</span>
     </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Advance:</span> 
       <span style="flex: 1; text-align: left;">﷼&nbsp;{{ prebookForm.get('advance')?.value }}</span>
     </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Balance:</span> 
       <span style="flex: 1; text-align: left;">﷼&nbsp;{{ prebookForm.get('balance')?.value }}</span>
     </div>
-    
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Booking Date:</span> 
       <span style="flex: 1; text-align: left;">{{ prebookForm.get('date')?.value }}</span>
     </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Exp. Delivery Date:</span> 
       <span style="flex: 1; text-align: left;">{{ prebookForm.get('ddate')?.value }}</span>
     </div>
-    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Voucher:</span> 
       <span style="flex: 1; text-align: left;">{{ prebookForm.get('voucher')?.value }}</span>
     </div>
-    <div *ngIf="prebookForm.get('balance')?.value === 0" style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div *ngIf="prebookForm.get('balance')?.value === 0" style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Bill:</span> 
       <span style="flex: 1; text-align: left;">{{ prebookForm.get('bill')?.value }}</span>
     </div>
-    <div  style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+    <div style="display: flex; justify-content: space-between; margin: 20px 0;">
       <span style="width: 150px; text-align: left;"><i class="bi bi-arrow-bar-right">&nbsp;</i>Status:</span> 
       <span style="flex: 1; text-align: left;">{{ prebookForm.get('status')?.value | capitalize }}</span>
     </div>
   </div>
-  
 
+  <!-- Signature Section -->
+  <div style="position: fixed; bottom: 50px; width: 100%; padding: 0 20px;">
+    <div style="display: flex; justify-content: space-between; width: 100%;">
+      <div style="width: 200px; text-align: center;">
+        <div style="border-top: 1px solid #000; padding-top: 5px;">
+          <div style="font-size: 17px; font-weight: bold;">Customer Signature</div><br>
+          <div style="font-size: 17px;">Date: _____________</div>
+        </div>
+      </div>
+      
+      <div style="width: 200px; text-align: center;">
+        <div style="border-top: 1px solid #000; padding-top: 5px;">
+          <div style="font-size: 17px; font-weight: bold;">Manager Signature</div><br>
+          <div style="font-size: 17px;">Date: _____________</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 

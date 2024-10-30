@@ -21,7 +21,9 @@ export class AuthComponent implements OnInit {
     "SANAYA - 8335", "SHAQRA - 8340", "ARRAS - 8345", "MAJMA - 8350", "BURAIDA - 8355",
     "MINA PORT - 8415", "KHOBAR - 8420", "JUBAIL - 8425", "AL HASSA - 8430", "DABBAB - 8435",
     "BUDGET FOOD - 8485", "TUWAIQ - 9551", "EXIT16 - 9552", "MALAZ - 9553", "MAKKAH - 9651", 
-    "TAIF - 9652"
+    "TAIF - 9652","KHURAIS - 9555",
+     "SHOLAY - 9554",
+    " SHIFA - 9556"
   ];
   isLoginMode = true;
   captcha: string = '';

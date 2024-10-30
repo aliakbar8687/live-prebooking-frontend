@@ -13,7 +13,7 @@ export class ActivityLogComponent implements OnInit {
   filteredLogs: any[] = [];
   isLoading = true;
   currentPage: number = 1;
-  logsPerPage: number = 5;
+  logsPerPage: number = 20;
   totalPages: number = 0;
   pages: number[] = [];
   

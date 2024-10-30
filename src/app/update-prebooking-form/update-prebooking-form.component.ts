@@ -251,93 +251,51 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 20px;
-  width: 100%;
-  height: auto;
+  width: 210mm;  /* A4 width */
+  min-height: 297mm; /* A4 height */
   box-sizing: border-box;
-  background-color: #f4f4f9; /* Fallback background color */
-  background-image: url('/images/background.jpeg'); /* Replace with your image path */
-  background-size: cover; /* Cover the entire viewport */
-  background-position: center; /* Center the image */
+  background-color: #fff;
   color: #333;
 }
 
+#printSection {
+  width: 100%;
+  height: 100%;
+  padding: 20mm;  /* Standard A4 margins */
+  box-sizing: border-box;
+}
 
-    .company-info {
-      text-align: left;
-      margin-bottom: 20px;
-    }
+.company-info {
+  text-align: left;
+  margin-bottom: 20px;
+}
 
-    .printable-content {
-      margin-top: 5px;
-      background-color: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
+.printable-content {
+  margin-top: 5px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-    .printable-content p {
-      font-size: 16px;
-      margin-bottom: 10px;
-      line-height: 1.6;
-    }
+@media print {
+  body {
+    margin: 0;
+    padding: 0;
+    background: none;
+  }
+  
+  #printSection {
+    position: relative;
+    padding: 20mm;
+    background: white;
+  }
 
-    /* Signature styles */
-    .signature-section {
-      position: absolute;
-      bottom: 20px;
-      width: 100%;
-      display: flex;
-      justify-content: flex-start; /* Align signatures to the left */
-      padding: 0 20px;
-    }
-
-    .signature {
-      display: flex;
-      align-items: center;
-      width: 20%;
-      font-size: 16px;
-      margin-left: 20px; /* Move signatures to the left */
-      font-weight: 900;
-      margin-right: 100px; /* Add more space between the signatures */
-    }
-
-    .signature p {
-      margin: 0;
-      margin-right: 10px;
-      white-space: nowrap;
-      font-weight: 900;
-    }
-
-    .signature-line {
-      flex-grow: 1;
-      border-top: 2px solid #333;
-      height: 1px;
-    }
-
-    /* Add a colorful border and theme */
-    .printable-content {
-      border-left: 8px solid #3498db;
-      border-right: 8px solid #e74c3c;
-    }
-
-    /* Custom colors and shadow for the header */
-    #currentDateTime {
-      text-align: left;
-      color: brown;
-      font-weight: bold;
-      margin-bottom: 20px;
-      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-    }
-
-    /* Add shadow to signature boxes */
-    .signature {
-      background-color: #f9f9f9;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      font-weight: 900;
-    }
-
+  .printable-content {
+    box-shadow: none;
+    padding: 0;
+  }
+}
   </style>
 </head>
 <body onload="window.print(); window.close();">
@@ -347,17 +305,7 @@ body {
     ${content}
   </div>
 
-  <!-- Signature section -->
-  <div class="signature-section">
-    <div class="signature">
-      <p>Customer Signature</p>
-      <div class="signature-line"></div>
-    </div>
-    <div class="signature">
-      <p>Manager Signature</p>
-      <div class="signature-line"></div>
-    </div>
-  </div>
+
 
   <script>
     // Function to format date and time
