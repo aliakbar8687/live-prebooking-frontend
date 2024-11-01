@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import * as XLSX from 'exceljs';
 import { format } from 'date-fns';
 import { retry, catchError, throwError } from 'rxjs';
+import { PrebookFormService } from '../prebook-form.service';
 
 
 export interface DeliveryLog {
@@ -34,8 +35,9 @@ export class DeliveryLogTableComponent implements OnInit {
   totalTripCount: number = 0;
   totalNumOfOrders: number = 0;
   totalAmount: number = 0;
+  isAdmin: boolean = false;
   
-  constructor(private route: ActivatedRoute, private http: HttpClient) {}
+  constructor(private route: ActivatedRoute, private http: HttpClient,private prebookFormService: PrebookFormService) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -49,6 +51,8 @@ export class DeliveryLogTableComponent implements OnInit {
       }
       this.loadDeliveryLogs();
     });
+    this.isAdmin = this.prebookFormService.isAdmin();
+
   }
 
   loadDeliveryLogs(): void {

@@ -75,10 +75,10 @@
           <p>What would you like to do?</p>
           <button class="btn btn-primary me-3" (click)="updateBooking()"><i class="bi bi-pencil"></i>&nbsp;Update / Print Product Booking&nbsp;<i class="bi bi-printer-fill"></i></button>
           <button class="btn btn-secondary me-3" (click)="createTicket()">Create/Update Booking Ticket &nbsp;<i class="bi bi-cloud-arrow-up"></i></button>
-          <button class="btn btn-secondary me-3" (click)="deletePrebooking(selectedUniqueId)">Delete Prebooking&nbsp;<i class="bi bi-trash"></i></button>
+          <button *ngIf="isAdmin" class="btn btn-secondary me-3" (click)="deletePrebooking(selectedUniqueId)">Delete Prebooking&nbsp;<i class="bi bi-trash"></i></button>
 
         </div>
-      </div>
+      </div> 
     </div>
   </div>
 </div>

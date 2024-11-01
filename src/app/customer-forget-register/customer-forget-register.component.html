@@ -1,0 +1,235 @@
+<div class="container mx-auto p-4">
+    <!-- Main Content Section -->
+    <div [ngClass]="{'hidden-content': showModal}">
+      <!-- Page Title -->
+      <h2 class="text-2xl font-bold text-center mb-6">Customer forget Registration </h2>
+      <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+  
+      <!-- Loading Indicator -->
+      <div *ngIf="loading" class="text-center py-4">
+        <span class="text-gray-600">Loading...</span>
+      </div>
+  
+      <!-- Header with Search and Add Button -->
+      <div class="flex justify-between items-center mb-4">
+        <div class="flex-1 mr-4">
+          <input
+            type="text"
+            [(ngModel)]="searchTerm"
+            (input)="applyFilter()"
+            placeholder="Search records..."
+            class="search-input"
+          />
+        </div>
+        <button
+          (click)="openAddModal()"
+          class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 me-2"
+        >
+          Add Record
+        </button>
+        
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600  " (click)="exportToExcel()">Export to Excel&nbsp;<i class="bi bi-file-spreadsheet"></i></button>
+      </div>
+  
+      <!-- Records Table -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full" id="register">
+          <thead>
+            <tr>
+              <th>Sr.No</th>
+              <th>Date</th>
+              <th>POS No.</th>
+              <th>Cashier ID</th>
+              <th>Barcode/Article No.</th>
+              <th>Item Description</th>
+              <th>Quantity</th>
+              <th>Customer Contact No.</th>
+              <th>Manger Name/Sign</th>
+              <th *ngIf="isAdmin">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let record of paginatedRecords; let i = index">
+              <td>{{(currentPage - 1) * pageSize + i + 1}}</td>
+              <td>{{record.date | date:'short'}}</td>
+              <td>{{record.POS}}</td>
+              <td>{{record.CashierId}}</td>
+              <td>{{record.barcode}}</td>
+              <td>{{record.description}}</td>
+              <td>{{record.quantity}}</td>
+              <td>{{record.phone}}</td>
+              <td>{{record.name}}</td>
+              <td *ngIf="isAdmin" class="action-buttons">
+                <button
+                  (click)="editRecord(record)"
+                  class="bg-yellow-500 text-white px-2 py-1 rounded mr-2"
+                >
+                  Edit
+                </button>
+                <button
+                  *ngIf="record.id"
+                  (click)="deleteRecord(record.id)"
+                  class="bg-red-500 text-white px-2 py-1 rounded"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            <tr *ngIf="paginatedRecords.length === 0 && !loading">
+              <td colspan="9" class="p-4 text-center">No records found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      
+      <!-- Add pagination controls -->
+      <div class="flex justify-center items-center space-x-2 mt-4" *ngIf="totalPages > 1">
+        <button 
+          [disabled]="currentPage === 1"
+          (click)="goToPage(currentPage - 1)"
+          class="px-3 py-1 rounded border"
+          [class.bg-gray-200]="currentPage === 1"
+        >
+          Previous
+        </button>
+        
+        <button 
+          *ngFor="let page of pages"
+          (click)="goToPage(page)"
+          class="px-3 py-1 rounded border"
+          [class.bg-blue-500]="currentPage === page"
+          [class.text-white]="currentPage === page"
+        >
+          {{page}}
+        </button>
+        
+        <button 
+          [disabled]="currentPage === totalPages"
+          (click)="goToPage(currentPage + 1)"
+          class="px-3 py-1 rounded border"
+          [class.bg-gray-200]="currentPage === totalPages"
+        >
+          Next
+        </button>
+      </div>
+      
+      <!-- Add records per page information -->
+      <div class="text-center mt-2 text-sm text-gray-600">
+        Showing {{(currentPage - 1) * pageSize + 1}} to {{Math.min(currentPage * pageSize, filteredRecords.length)}} of {{filteredRecords.length}} records
+      </div>
+    </div>
+  
+    <!-- Modal Section -->
+    <div *ngIf="showModal" class="modal-overlay" (click)="closeModalOnOverlay($event)">
+      <div class="modal-content">
+        <h2 class="text-xl font-bold mb-4">
+          {{isEditMode ? 'Edit' : 'Add'}} Record
+        </h2>
+        
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="form-label">POS No.</label>
+              <input
+                type="text"
+                formControlName="POS"
+                [class.border-red-500]="registerForm.get('POS')?.invalid && registerForm.get('POS')?.touched"
+              />
+              <span *ngIf="registerForm.get('POS')?.invalid && registerForm.get('POS')?.touched" class="text-red-500">
+                POS is required
+              </span>
+            </div>
+            
+            <div>
+              <label class="form-label">Cashier ID</label>
+              <input
+                type="text"
+                formControlName="CashierId"
+                [class.border-red-500]="registerForm.get('CashierId')?.invalid && registerForm.get('CashierId')?.touched"
+              />
+              <span *ngIf="registerForm.get('CashierId')?.invalid && registerForm.get('CashierId')?.touched" class="text-red-500">
+                Cashier ID is required
+              </span>
+            </div>
+            
+            <div>
+              <label class="form-label">Barcode/Artcile No.</label>
+              <input
+                type="text"
+                formControlName="barcode"
+                [class.border-red-500]="registerForm.get('barcode')?.invalid && registerForm.get('barcode')?.touched"
+              />
+              <span *ngIf="registerForm.get('barcode')?.invalid && registerForm.get('barcode')?.touched" class="text-red-500">
+                Barcode is required
+              </span>
+            </div>
+            
+            <div>
+              <label class="form-label">Item Description</label>
+              <input
+                type="text"
+                formControlName="description"
+                [class.border-red-500]="registerForm.get('description')?.invalid && registerForm.get('description')?.touched"
+              />
+              <span *ngIf="registerForm.get('description')?.invalid && registerForm.get('description')?.touched" class="text-red-500">
+                Description is required
+              </span>
+            </div>
+            
+            <div>
+              <label class="form-label">Quantity</label>
+              <input
+                type="number"
+                formControlName="quantity"
+                [class.border-red-500]="registerForm.get('quantity')?.invalid && registerForm.get('quantity')?.touched"
+              />
+              <span *ngIf="registerForm.get('quantity')?.invalid && registerForm.get('quantity')?.touched" class="text-red-500">
+                Quantity must be at least 1
+              </span>
+            </div>
+            
+            <div>
+              <label class="form-label">Customer Contact No.</label>
+              <input
+                type="tel"
+                formControlName="phone"
+                [class.border-red-500]="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched"
+              />
+              <span *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="text-red-500">
+                Please enter a valid 10-digit phone number
+              </span>
+            </div>
+            
+            <div>
+              <label class="form-label">Manger Name</label>
+              <input
+                type="text"
+                formControlName="name"
+                [class.border-red-500]="registerForm.get('name')?.invalid && registerForm.get('name')?.touched"
+              />
+              <span *ngIf="registerForm.get('name')?.invalid && registerForm.get('name')?.touched" class="text-red-500">
+                Name is required
+              </span>
+            </div>
+          </div>
+  
+          <div class="flex justify-end gap-2 mt-6">
+            <button
+              type="button"
+              (click)="closeModal()"
+              class="px-4 py-2 border rounded hover:bg-gray-100"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              [disabled]="registerForm.invalid"
+              class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"
+            >
+              {{isEditMode ? 'Update' : 'Add'}}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>

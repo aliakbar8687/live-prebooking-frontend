@@ -8,8 +8,8 @@
     <div>
     <strong><i class="bi bi-person-badge"></i>&nbsp; {{ userRole || 'Admin' | capitalize }}</strong>
   </div>
-  <div style="text-align: center;margin-top: 20px;font-size: 2.5rem;  " class="user-role">
-    <strong>Dashboard&nbsp;<br><br><i class="bi bi-book"></i></strong>
+  <div style="text-align: center;margin-top: 10px;font-size: 1.5rem;  " class="user-role">
+    <strong>Dashboard&nbsp;<i class="bi bi-book"></i></strong>
   </div>
 </div>
   <ul>
@@ -18,6 +18,7 @@
     <li><a routerLink="/prebooking-data"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Prebooking Data</a></li>
     <li><a routerLink="/prebooking-report"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Prebooking Report</a></li>
     <li><a routerLink="/delivery-log-book"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Delivery Log Book</a></li>
+    <li><a routerLink="/customer-forget-register"><i class="bi bi-optical-audio"></i>&nbsp;&nbsp;Customer forget Register</a></li>
     <!-- Conditionally show Signup option only for admin -->
    
     <li *ngIf="isAdmin">

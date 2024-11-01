@@ -8,7 +8,17 @@ export interface AuthResponse {
   role: string;    // User role (admin/store/user)
   message: string; // Message returned from the server
 }
-
+export interface ForgetRegister {
+  id?: number;
+  date?: string;
+  POS: string;
+  CashierId: string;
+  barcode: string;
+  description: string;
+  quantity: number;
+  phone: string;
+  name: string;
+}
 export interface AuthUser {
   token: string | null;  // User token (null if not logged in)
   role: string | null;   // User role (admin/store/user)
@@ -18,7 +28,7 @@ export interface AuthUser {
   providedIn: 'root'
 })
 export class PrebookFormService {
-  private baseUrl = 'https://prebookingapi.hyperwafa.com/api'; // Backend API URL
+  private baseUrl = ' https://prebookingapi.hyperwafa.com/api'; // Backend API URL
   private authTokenKey = 'authToken'; // Key for storing the token in localStorage
   private loading: boolean = false; // Add a loading state
 
@@ -277,5 +287,28 @@ export class PrebookFormService {
   }
 
 
+
+
+
+  //forgetregister
+  getAll(): Observable<ForgetRegister[]> {
+    return this.http.get<ForgetRegister[]>(`${this.baseUrl}/forgetregister`);
+  }
+
+  getById(id: number): Observable<ForgetRegister> {
+    return this.http.get<ForgetRegister>(`${this.baseUrl}/forgetregister/${id}`);
+  }
+
+  create(data: ForgetRegister): Observable<any> {
+    return this.http.post(`${this.baseUrl}/forgetregister`, data);
+  }
+
+  update(id: number, data: ForgetRegister): Observable<any> {
+    return this.http.put(`${this.baseUrl}/forgetregister/${id}`, data);
+  }
+
+  delete(id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/forgetregister/${id}`);
+  }
   
 }

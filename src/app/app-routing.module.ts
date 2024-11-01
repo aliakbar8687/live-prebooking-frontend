@@ -13,6 +13,7 @@ import { ManageUserComponent } from './manage-user/manage-user.component';
 import { HomeComponent } from './home/home.component';
 import { ActivityLogComponent } from './activity-log/activity-log.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { CustomerForgetRegisterComponent } from './customer-forget-register/customer-forget-register.component';
 
 const routes: Routes = [
   { path: 'prebooking-data', component: PrebookingDataComponent, canActivate: [AuthGuard] },
@@ -26,6 +27,8 @@ const routes: Routes = [
   {   path: 'ticket-form/:uniqueId', component: TicketFormComponent, canActivate: [AuthGuard] },
 
   { path: 'delivery-log-table', component: DeliveryLogTableComponent, canActivate: [AuthGuard] },
+  { path: 'customer-forget-register', component: CustomerForgetRegisterComponent, canActivate: [AuthGuard] },
+
   { path: 'auth', component: AuthComponent }, // No AuthGuard here
   { path: 'auth?mode=signup', component: AuthComponent, canActivate: [AuthGuard] }, // Guard on signup mode
   { path: '', redirectTo: '/auth', pathMatch: 'full' },

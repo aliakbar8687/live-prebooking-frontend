@@ -16,7 +16,7 @@
         <th>Number of Orders</th>
         <th>Amount</th>
         <th>Remarks</th>
-        <th>Actions</th>
+        <th *ngIf="isAdmin">Actions</th>
       </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@
       
       
         <td>{{ log.remarks | uppercase }}</td>
-        <td>
+        <td *ngIf="isAdmin">
           <button class="btn btn-warning me-2" (click)="editDeliveryLog(log)">Edit &nbsp;<i class="bi bi-pencil-square"></i></button>
           <button class="btn btn-danger" (click)="deleteDeliveryLog(log.id)">Delete &nbsp;<i class="bi bi-trash"></i></button>
         </td>

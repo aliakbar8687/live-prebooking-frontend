@@ -20,6 +20,7 @@ export class PrebookingDataComponent implements OnInit {
   successMessage: string = '';
   itemsPerPage: number = 5; // Default value
   itemsPerPageOptions: number[] = [5, 10, 20, 50]; // Options for dropdown
+  isAdmin: boolean = false;
 
   constructor(
     private http: HttpClient, 
@@ -31,6 +32,8 @@ export class PrebookingDataComponent implements OnInit {
     this.userRole = this.prebookFormService.getUserRole();
     console.log('User Role:', this.userRole);
     this.loadPrebookingData();
+    this.isAdmin = this.prebookFormService.isAdmin();
+
   }
 
   loadPrebookingData() {

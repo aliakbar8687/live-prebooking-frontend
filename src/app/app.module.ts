@@ -28,6 +28,7 @@ import { ManageUserComponent } from './manage-user/manage-user.component';
 import { HomeComponent } from './home/home.component';
 import { ActivityLogComponent } from './activity-log/activity-log.component';
 import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
+import { CustomerForgetRegisterComponent } from './customer-forget-register/customer-forget-register.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
     ManageUserComponent,
     HomeComponent,
     ActivityLogComponent,
-    PagenotfoundComponent
+    PagenotfoundComponent,
+    CustomerForgetRegisterComponent
   ],
   imports: [
     BrowserModule,
